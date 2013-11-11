@@ -5,12 +5,11 @@
 
 <body>
 
-<h2> welcome
 
 <%
-	out.print(request.getAttribute("name"));	
+	out.println("<h2>" + (String)request.getAttribute("name") + "</h2>");	
 %>  
-you have successfully logged in </h2>
+
 
 <h3> Details </h3>
 <!-- displaying all details inside -->

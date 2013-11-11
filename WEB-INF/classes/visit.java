@@ -6,7 +6,7 @@ import java.sql.*;
 
 //action for login.jsp file.
 
-public class loginaction extends HttpServlet{
+public class visit extends HttpServlet{
 
 	Connection conn;
 	private String target;
@@ -57,30 +57,23 @@ public class loginaction extends HttpServlet{
 		//create a session if one doesn't exist already.
 		HttpSession session = request.getSession();
 
-	  	String uname = request.getParameter("username");
-	  	String passwd = request.getParameter("password");
-
-
+		Integer visit_id = request.getParameter("visitid");
 
 		PreparedStatement pst;
 	  
 	 	try{
-	  		pst = conn.prepareStatement("select * from users where name = ?  and password = ?");
-	  		pst.setString(1,uname);
-	  		pst.setString(2,passwd);
+	  		pst = conn.prepareStatement("select * from users where id = ?");
+	  		pst.setInt(1, visitid);
 	  		ResultSet rs = pst.executeQuery();
 
 	  		//if there is no match
 	  		if(!rs.next()){
-	  			target = "/login.jsp";
+	  			request.setAttribute("found",0);
 	  		}
 	  		//if there is a match.
 	  		else{
-				int id = rs.getInt("id");
-				
-				//set id session variable.
-				session.setAttribute("id",id);
-	  			target = "/welcome.jsp";
+	  			request.setAttribute("found", 1);
+	  			target = "/visit.jsp";
 
 	  			//filling in request attributes to display in JSP
 	  			request.setAttribute("name",rs.getString("name"));
@@ -89,8 +82,13 @@ public class loginaction extends HttpServlet{
 	  			request.setAttribute("sex",rs.getInt("sex"));
 	  			request.setAttribute("loc",rs.getString("location"));
 	  			request.setAttribute("email",rs.getString("emailid"));
-	  			request.setAttribute("passwd",rs.getString("password"));
 	  			request.setAttribute("in_in",rs.getInt("interested_in"));
+	  			
+	  			Integer rel = 0; //no relation yet.
+	  			Integer user1 = session.getAttribute("id");
+	  			Integer user2 = visitid;
+
+	  			
 
 
 	  		}

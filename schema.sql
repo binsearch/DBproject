@@ -31,7 +31,7 @@ create table pictures(
 );
 
 create table interests(
-	usersid integer references users(id),
+	userid integer references users(id),
 	name varchar(30)
 );
 
