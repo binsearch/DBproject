@@ -1,0 +1,14 @@
+<web-app version="2.4" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.c
+om/xml/ns/j2ee" xsi:schemalocation="http:/java.sun.com/dtd/web-app_2_3.dtd">
+
+<servlet>
+  <servlet-name>loginaction</servlet-name>
+  <servlet-class>loginaction</servlet-class>
+</servlet>
+<servlet-mapping>
+  <servlet-name>loginaction</servlet-name>
+  <url-pattern>/home</url-pattern>
+</servlet-mapping>
+
+</web-app>
+
