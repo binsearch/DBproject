@@ -5,12 +5,13 @@
 
 <body>
 
-<h2> welcome
+<h2>
 
 <%
 	out.print(request.getAttribute("name"));	
 %>  
-you have successfully logged in </h2>
+</h2>
+<a href="logout.jsp"><em> logout </em></a>
 
 <h3> Details </h3>
 <!-- displaying all details inside -->
