@@ -10,5 +10,15 @@ om/xml/ns/j2ee" xsi:schemalocation="http:/java.sun.com/dtd/web-app_2_3.dtd">
   <url-pattern>/home</url-pattern>
 </servlet-mapping>
 
+<servlet>
+  <servlet-name>visit</servlet-name>
+  <servlet-class>visit</servlet-class>
+</servlet>
+<servlet-mapping>
+  <servlet-name>visit</servlet-name>
+  <url-pattern>/visit</url-pattern>
+</servlet-mapping>
+
+
 </web-app>
 

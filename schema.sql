@@ -57,7 +57,7 @@ create table requests(
 
 create table blocked(
 	userid integer references users(id),
-	blocked_usersid integer references users(id)  
+	blocked_userid integer references users(id)  
 );
 
 create table contacts(

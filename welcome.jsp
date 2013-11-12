@@ -44,7 +44,13 @@ you have successfully logged in </h2>
 		out.println("girls</p>");
 	}
 
+
+
 %>
+
+
+<p> testing for other profiles </p>
+<a href="visit?visitid=1"> rohith </a>
 
 
 </body>

@@ -57,13 +57,13 @@ public class visit extends HttpServlet{
 		//create a session if one doesn't exist already.
 		HttpSession session = request.getSession();
 
-		Integer visit_id = request.getParameter("visitid");
+		Integer visit_id = Integer.parseInt(request.getParameter("visitid"));
 
 		PreparedStatement pst;
 	  
 	 	try{
 	  		pst = conn.prepareStatement("select * from users where id = ?");
-	  		pst.setInt(1, visitid);
+	  		pst.setInt(1, visit_id);
 	  		ResultSet rs = pst.executeQuery();
 
 	  		//if there is no match
@@ -85,11 +85,60 @@ public class visit extends HttpServlet{
 	  			request.setAttribute("in_in",rs.getInt("interested_in"));
 	  			
 	  			Integer rel = 0; //no relation yet.
-	  			Integer user1 = session.getAttribute("id");
-	  			Integer user2 = visitid;
-
+	  			//1 means friends.
+	  			//2 means blocked.
+	  			//3 means accept request.
+	  			//4 means request sent.
 	  			
+	  			Integer user1 = (Integer)session.getAttribute("id");
+	  			Integer user2 = visit_id;
 
+	  			pst = conn.prepareStatement("select * from requests where sender = ? and receiver = ?");
+	  			pst.setInt(1, user2);
+	  			pst.setInt(2, user1);
+	  			rs = pst.executeQuery();
+	  			//3 accept request
+	  			if(rs.next()){
+	  				rel = 3;
+	  			}
+
+	  			pst.setInt(1, user2);
+	  			pst.setInt(2, user1);
+	  			rs = pst.executeQuery();
+	  			//4 request sent
+	  			if(rs.next()){
+	  				rel = 4;
+	  			}
+
+				pst = conn.prepareStatement("select * from contacts where user1 = ? and user2 = ?");
+				pst.setInt(1, user2);
+				pst.setInt(2, user1);
+				rs = pst.executeQuery();
+				//1 friends
+
+				if(rs.next()){
+					rel = 1;
+				}
+
+				pst = conn.prepareStatement("select * from blocked where userid = ? and blocked_userid = ?");
+				pst.setInt(1, user1);
+				pst.setInt(2, user2);
+				rs = pst.executeQuery();
+				//2 unblock person
+
+				if(rs.next()){
+					rel = 2;
+				}
+
+				pst.setInt(1, user2);
+				pst.setInt(2, user1);
+				rs = pst.executeQuery();
+				//loggedin user is blocked.
+				if(rs.next()){
+					target = "/home";
+				}
+
+				request.setAttribute("relation", rel);
 
 	  		}
 	  	
