@@ -139,8 +139,14 @@ public class visit extends HttpServlet{
 
 				request.setAttribute("relation", rel);
 				request.setAttribute("visitid",visit_id);
+				
+				//if it's his own profile.
+				if(visit_id == user1){
+					target = "/home";
+				}
+
 	  		}
-	  	
+
 		}
 	  	catch(SQLException pstatement){
 	  		out.println("prepare statement error");

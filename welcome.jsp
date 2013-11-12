@@ -5,6 +5,20 @@
 
 <body>
 
+<!-- search -->
+
+<p><a href="search.jsp">search</a></p>
+
+<!-- printing feedback for events like viewing blocked user -->
+<p><em>
+<%
+	String feed = (String)request.getAttribute("feedback");
+	if(feed != null){
+		out.print(feed); 
+	}
+%>
+</em></p>
+
 <h2>
 
 <%
@@ -49,12 +63,25 @@
 
 %>
 
+<h4> Interests </h4>
+<p>
+<%
+	out.print((String)request.getAttribute("interests"));
+%>
+</p>
 
-<p> testing for other profiles </p>
-<a href="visit?visitid=1"> rohith </a>
-<a href="visit?visitid=2"> sachin </a>
+<h4> Liked Pages </h4>
+<p>
+<%
+	out.print((String)request.getAttribute("pagelist"));
+%>
+</p>
+
 
 <a href="message"> <h4> Messages </h4> </a>
+<a href="requests"> <h4> Requests</h4> </a>
+<a href="contacts"> <h4>Contacts </h4> </a>
+<a href="notifications"> <h4> Notifications </h4> </a>
 
 
 

@@ -134,7 +134,6 @@ INSERT INTO pages VALUES (6,'Sachin Lovers not a Sportsmen');
 INSERT INTO likes VALUES (1,1);
 INSERT INTO likes VALUES (1,2);
 INSERT INTO likes VALUES (2,1);
-INSERT INTO likes VALUES (2,1);
 INSERT INTO likes VALUES (3,1);
 INSERT INTO likes VALUES (4,2);
 INSERT INTO likes VALUES (5,1);
