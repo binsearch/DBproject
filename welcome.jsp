@@ -52,6 +52,9 @@ you have successfully logged in </h2>
 <p> testing for other profiles </p>
 <a href="visit?visitid=1"> rohith </a>
 
+<a href="message"> <h4> Messages </h4> </a>
+
+
 
 </body>
 </html>
