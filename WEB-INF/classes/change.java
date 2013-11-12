@@ -5,7 +5,7 @@ import java.util.*;
 import java.sql.*;
 
 
-public class visit extends HttpServlet{
+public class change extends HttpServlet{
 
 	Connection conn;
 	private String target;
@@ -57,90 +57,88 @@ public class visit extends HttpServlet{
 		HttpSession session = request.getSession();
 
 		Integer visit_id = Integer.parseInt(request.getParameter("visitid"));
+		Integer rel = Integer.parseInt(request.getParameter("rel"));
 
 		PreparedStatement pst;
 	  
 	 	try{
-	  		pst = conn.prepareStatement("select * from users where id = ?");
-	  		pst.setInt(1, visit_id);
-	  		ResultSet rs = pst.executeQuery();
 
-	  		//if there is no match
-	  		if(!rs.next()){
-	  			request.setAttribute("found",0);
-	  		}
-	  		//if there is a match.
-	  		else{
-	  			request.setAttribute("found", 1);
-	  			target = "/visit.jsp";
-
-	  			//filling in request attributes to display in JSP
-	  			request.setAttribute("name",rs.getString("name"));
-	  			request.setAttribute("bday",rs.getString("birthday"));
-	  			request.setAttribute("edu",rs.getString("education"));
-	  			request.setAttribute("sex",rs.getInt("sex"));
-	  			request.setAttribute("loc",rs.getString("location"));
-	  			request.setAttribute("email",rs.getString("emailid"));
-	  			request.setAttribute("in_in",rs.getInt("interested_in"));
 	  			
-	  			Integer rel = 0; //no relation yet.
-	  			//1 means friends.
-	  			//2 means blocked.
-	  			//3 means accept request.
-	  			//4 means request sent.
-	  			
-	  			Integer user1 = (Integer)session.getAttribute("id");
-	  			Integer user2 = visit_id;
 
-	  			pst = conn.prepareStatement("select * from requests where sender = ? and receiver = ?");
-	  			pst.setInt(1, user2);
-	  			pst.setInt(2, user1);
-	  			rs = pst.executeQuery();
-	  			//3 accept request
-	  			if(rs.next()){
-	  				rel = 3;
-	  			}
+  			//1 means friends.
+  			//2 means blocked.
+  			//3 means accept request.
+  			//4 means request sent.
+  			
+  			Integer login_id = (Integer)session.getAttribute("id");
 
-	  			pst.setInt(1, user1);
-	  			pst.setInt(2, user2);
-	  			rs = pst.executeQuery();
-	  			//4 request sent
-	  			if(rs.next()){
-	  				rel = 4;
-	  			}
+  			//deleting the contacts entry from the table as unfriend is selected.
+  			if(rel == 1){
+				pst = conn.prepareStatement("delete from contacts where user1 = ? and user2 = ?");
+				pst.setInt(1,login_id);
+				pst.setInt(2,visit_id);
+				pst.executeUpdate();
 
-				pst = conn.prepareStatement("select * from contacts where user1 = ? and user2 = ?");
-				pst.setInt(1, user2);
-				pst.setInt(2, user1);
-				rs = pst.executeQuery();
-				//1 friends
+				pst.setInt(2,login_id);
+				pst.setInt(1,visit_id);
+				pst.executeUpdate();
 
-				if(rs.next()){
-					rel = 1;
-				}
+  			}
 
-				pst = conn.prepareStatement("select * from blocked where userid = ? and blocked_userid = ?");
-				pst.setInt(1, user1);
-				pst.setInt(2, user2);
-				rs = pst.executeQuery();
-				//2 unblock person
+  			//unblock
+  			if(rel == 2){
+				pst = conn.prepareStatement("delete from blocked where userid = ? and blocked_userid = ?");
+				pst.setInt(1,login_id);
+				pst.setInt(2,visit_id);
+				pst.executeUpdate();
+  			}
 
-				if(rs.next()){
-					rel = 2;
-				}
+  			//accept request.
+  			if(rel == 3){
+  				pst = conn.prepareStatement("delete from requests where sender = ? and receiver = ?");
+  				pst.setInt(1,visit_id);
+  				pst.setInt(2,login_id);
+  				pst.executeUpdate();
+  				
+  				pst = conn.prepareStatement("insert into contacts values (?,?)");
+  				pst.setInt(1,login_id);
+  				pst.setInt(2,visit_id);
+  				pst.executeUpdate();
+				
+				pst.setInt(1,visit_id);
+				pst.setInt(2,login_id);
+				pst.executeUpdate();
+  			}
 
-				pst.setInt(1, user2);
-				pst.setInt(2, user1);
-				rs = pst.executeQuery();
-				//loggedin user is blocked.
-				if(rs.next()){
-					target = "/home";
-				}
+  			//cancel request.
+  			if(rel == 4){
+				pst = conn.prepareStatement("delete from requests where sender = ? and receiver = ?");
+				pst.setInt(1,login_id);
+				pst.setInt(2,visit_id);
+				pst.executeUpdate();
+  			}
 
-				request.setAttribute("relation", rel);
-				request.setAttribute("visitid",visit_id);
-	  		}
-	  	
+  			//send request.
+  			if(rel == 0){
+				pst = conn.prepareStatement("insert into requests values (?,?)");
+				pst.setInt(1,login_id);
+				pst.setInt(2,visit_id);
+				pst.executeUpdate();
+
+  			}
+
+  			//block user.
+  			if(rel == 5){
+  				pst = conn.prepareStatement("insert into blocked values (?,?)");
+  				pst.setInt(1,login_id);
+  				pst.setInt(2,visit_id);
+  				pst.executeUpdate();
+
+  			}
+
+  			target = "/visit?visitid=" + Integer.toString(visit_id);
+  		
+  	
 		}
 	  	catch(SQLException pstatement){
 	  		out.println("prepare statement error");

@@ -10,25 +10,29 @@
 	out.println("<h2>" + (String)request.getAttribute("name") + "</h2>");
 %>  
 
-<b>
 <%
 	Integer rel = (Integer)request.getAttribute("relation");
-	
+	String visit_id = Integer.toString((Integer)request.getAttribute("visitid"));
+
 	try{
 		if(rel == 1){
-			out.print("friends");
+			out.println("<b>friends</b>");
+			out.println("<a href=\"change?rel=1&visitid="+visit_id+"\"><em>(unfriend)</em></a>");
 		}
 		if(rel == 2){
-			out.print("you blocked this user");
+			out.println("<b>blocked</b>");
+			out.println("<a href=\"change?rel=2&visitid="+visit_id+"\"><em>(unblock)</em></a>");
 		}
 		if(rel == 3){
-			out.print("accept request");
+			out.print("<a href=\"change?rel=3&visitid="+visit_id+"\"><b>accept request</b></a>");
 		}
 		if(rel == 4){
-			out.print("request sent");
+			out.print("<b>request sent</b>");
+			out.println("<a href=\"change?rel=4&visitid="+visit_id+"\"><em>(cancel request)</em></a>");	
 		}
 		if(rel == 0){
-			out.print("send request");
+			out.print("<a href=\"change?rel=0&visitid="+visit_id+"\"><b>send request</b></a><br>");
+			out.print("<a href=\"change?rel=5&visitid="+visit_id+"\"><b>block user</b></a>");
 		}
 	}
 	catch(NullPointerException e ){
@@ -36,7 +40,7 @@
 	}
 
 %>
-</b>
+
 <h3> Details </h3>
 <!-- displaying all details inside -->
 <%

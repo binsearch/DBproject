@@ -56,7 +56,7 @@ public class loginaction extends HttpServlet{
 
 		//create a session if one doesn't exist already.
 		HttpSession session = request.getSession();
-
+		Integer login_id = (Integer)session.getAttribute("id");
 	  	String uname = request.getParameter("username");
 	  	String passwd = request.getParameter("password");
 
@@ -65,19 +65,25 @@ public class loginaction extends HttpServlet{
 		PreparedStatement pst;
 	  
 	 	try{
-	  		pst = conn.prepareStatement("select * from users where name = ?  and password = ?");
-	  		pst.setString(1,uname);
-	  		pst.setString(2,passwd);
-	  		ResultSet rs = pst.executeQuery();
 
-	  		//if there is no match
-	  		if(!rs.next()){
-	  			target = "/login.jsp";
-	  		}
+	 		if(login_id != null){
+	 			pst = conn.prepareStatement("select * from users where id = ?");
+	 			pst.setInt(1, login_id);
+	 		}
+	 		else{
+				pst = conn.prepareStatement("select * from users where name = ?  and password = ?");
+				pst.setString(1,uname);
+				pst.setString(2,passwd);	 			
+	 		}
+	  		target = "/login.jsp";
+
+
+	 		ResultSet rs = pst.executeQuery();
 	  		//if there is a match.
-	  		else{
-				int id = rs.getInt("id");
-				
+	  		if(rs.next()){
+	  			Integer id = 0;
+				id = rs.getInt("id");
+
 				//set id session variable.
 				session.setAttribute("id",id);
 	  			target = "/welcome.jsp";
@@ -92,7 +98,6 @@ public class loginaction extends HttpServlet{
 	  			request.setAttribute("passwd",rs.getString("password"));
 	  			request.setAttribute("in_in",rs.getInt("interested_in"));
 
-
 	  		}
 	  	
 		}
@@ -100,8 +105,6 @@ public class loginaction extends HttpServlet{
 	  		out.println("prepare statement error");
 	  	}
 
-	  	// request.setAttribute("role",passwd);
-	  	// session.setAttribute("role",passwd);
 	  
 	  	ServletContext context = getServletContext();
 	  

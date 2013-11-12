@@ -28,5 +28,16 @@ om/xml/ns/j2ee" xsi:schemalocation="http:/java.sun.com/dtd/web-app_2_3.dtd">
   <url-pattern>/message</url-pattern>
 </servlet-mapping>
 
+<servlet>
+  <servlet-name>change</servlet-name>
+  <servlet-class>change</servlet-class>
+</servlet>
+<servlet-mapping>
+  <servlet-name>change</servlet-name>
+  <url-pattern>/change</url-pattern>
+</servlet-mapping>
+
+
+
 </web-app>
 
