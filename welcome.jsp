@@ -82,7 +82,7 @@
 <a href="requests"> <h4> Requests</h4> </a>
 <a href="contacts"> <h4>Contacts </h4> </a>
 <a href="notifications"> <h4> Notifications </h4> </a>
-
+<a href="pictures"><h4> Pictures </h4></a>
 
 
 </body>

@@ -21,5 +21,18 @@
 %>
 </em></p>
 
+<h4> Advanced search </h4>
+<form name="adsearch" method="post" action="search">
+	<input type="checkbox" name="ageop"> age:
+	<input type="text" name="lage" placeholder="from">
+	<input type="text" name="rage" placeholder="to">
+	<br>
+	<input type="checkbox" name="locop"> location:
+	<input type="text" name="loc" placeholder="place">
+	<br>
+	<input type="checkbox" name="male"> male
+	<input type="checkbox" name="female"> female
+</form>
+
 </body>
 </html>

@@ -78,7 +78,7 @@ public class search extends HttpServlet{
 				target = "/visit?visitid=" + Integer.toString(id);
 	  		}
 			else{
-				target = "/login.jsp";
+				target = "/search.jsp";
 				String feed = "user not found";
 				request.setAttribute("feedback",feed);
 			}	  	
