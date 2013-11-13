@@ -124,6 +124,17 @@ public class loginaction extends HttpServlet{
 				}
 				request.setAttribute("pagelist", pagelist);
 
+				//find out whether the user is a moderator.
+				pst = conn.prepareStatement("select * from moderators where userid = ?");
+				pst.setInt(1,id);
+				rs = pst.executeQuery();
+				Integer mod = -1;
+				
+				if(rs.next()){
+					mod = rs.getInt("id");
+				}
+				session.setAttribute("mod",mod);
+
 	  		}
 	  	
 		}

@@ -82,6 +82,24 @@ om/xml/ns/j2ee" xsi:schemalocation="http:/java.sun.com/dtd/web-app_2_3.dtd">
   <url-pattern>/pictures</url-pattern>
 </servlet-mapping>
 
+<servlet>
+  <servlet-name>complaints</servlet-name>
+  <servlet-class>complaints</servlet-class>
+</servlet>
+<servlet-mapping>
+  <servlet-name>complaints</servlet-name>
+  <url-pattern>/complaints</url-pattern>
+</servlet-mapping>
+
+<servlet>
+  <servlet-name>addcom</servlet-name>
+  <servlet-class>addcom</servlet-class>
+</servlet>
+<servlet-mapping>
+  <servlet-name>addcom</servlet-name>
+  <url-pattern>/addcom</url-pattern>
+</servlet-mapping>
+
 
 </web-app>
 

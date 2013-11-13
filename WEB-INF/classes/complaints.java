@@ -4,9 +4,8 @@ import java.io.*;
 import java.util.*;
 import java.sql.*;
 
-//action for login.jsp file.
 
-public class notifications extends HttpServlet{
+public class complaints extends HttpServlet{
 
 	Connection conn;
 	private String target;
@@ -51,31 +50,54 @@ public class notifications extends HttpServlet{
 	}
 
 	public void doPost(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
-		String temp = "";
+	
 		PrintWriter out = response.getWriter();
 
 		//create a session if one doesn't exist already.
 		HttpSession session = request.getSession();
-		Integer id = (Integer) session.getAttribute("id");
-		target = "/notifications.jsp";
-		PreparedStatement pst,pst1;	  
+		Integer mod_id = (Integer)session.getAttribute("mod");
+
+
+		PreparedStatement pst;
+	  
 	 	try{
-	  		pst = conn.prepareStatement("select id,body from notifications where userid = ? order by id desc");
-	  		pst.setInt(1,id);
-	  		ResultSet rs = pst.executeQuery();
-	  		while(rs.next()){
-	  			String body = rs.getString("body");
-	  			temp=temp + "<div>  <p>" + body + "</p> </div> <br>";
-	  		}
+
+
+	 		if(mod_id == -1){
+	 			target = "/home";
+	 		}
+	 		else{
+	 			target = "/complaints.jsp";
+	 		}
+
+
+  			//find complaints assigned to this moderator.
+
+  			pst = conn.prepareStatement("select * from assignedto where id = ?");
+  			pst.setInt(1,mod_id);
+  			ResultSet rs = pst.executeQuery();
+  			String com_list = "";
+
+  			while(rs.next()){
+  				com_list = com_list + "<p>";
+  				pst = conn.prepareStatement("select * from complaints where id = ?");
+  				pst.setInt(1, rs.getInt("complaintid"));
+  				ResultSet trs = pst.executeQuery();
+  				if(trs.next()){
+  					com_list = com_list + trs.getString("data");
+  				}
+  				com_list = com_list + "</p>";
+  			}
+
+  			request.setAttribute("com_list", com_list);
+
 	  	
 		}
 	  	catch(SQLException pstatement){
 	  		out.println("prepare statement error");
 	  	}
-	  	String temp1="";
-	  	temp1="<a href='visit?visitid="+id+"'><h2>HOME</h2> </a> <br>";
-	  	request.setAttribute("result1",temp1);		
-        request.setAttribute("result2",temp);
+
+	  
 	  	ServletContext context = getServletContext();
 	  
 	  	RequestDispatcher dispatcher = context.getRequestDispatcher(target);

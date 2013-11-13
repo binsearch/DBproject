@@ -100,6 +100,32 @@ public class change extends HttpServlet{
   				pst.setInt(2,login_id);
   				pst.executeUpdate();
   				
+  				//insert into notifications.
+  				pst = conn.prepareStatement("select max(id) from notifications");
+  				ResultSet trs = pst.executeQuery();
+  				trs.next();
+  				Integer max_id = trs.getInt("max") + 1;
+  				
+  				//get the name of request sender.
+  				pst = conn.prepareStatement("select name from users where id = ?");
+  				pst.setInt(1,login_id);
+  				trs = pst.executeQuery();
+  				trs.next();
+  				String login_name = trs.getString("name");
+  				
+  				//making the body of notification.
+  				String body = "<a href=\"visit?visitid=";
+  				body = body + Integer.toString(login_id) + "\">";
+  				body = body + login_name + "</a>";
+  				body = body + " accepted your request";
+
+
+  				pst = conn.prepareStatement("insert into notifications values (?,?,?)");
+  				pst.setInt(1,max_id);
+  				pst.setString(2,body);
+  				pst.setInt(3,visit_id);
+  				pst.executeUpdate();
+
   				pst = conn.prepareStatement("insert into contacts values (?,?)");
   				pst.setInt(1,login_id);
   				pst.setInt(2,visit_id);

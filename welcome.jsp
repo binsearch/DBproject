@@ -83,7 +83,14 @@
 <a href="contacts"> <h4>Contacts </h4> </a>
 <a href="notifications"> <h4> Notifications </h4> </a>
 <a href="pictures"><h4> Pictures </h4></a>
+<a href="addcom.jsp"><h4> Add a complaint </h4></a>
 
+<%
+	Integer mod = (Integer)session.getAttribute("mod");
+	if(mod != -1){
+		out.print("<a href=\"complaints\"> complaints </a>");
+	}
+%>
 
 </body>
 </html>

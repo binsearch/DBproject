@@ -4,9 +4,8 @@ import java.io.*;
 import java.util.*;
 import java.sql.*;
 
-//action for login.jsp file.
 
-public class notifications extends HttpServlet{
+public class addcom extends HttpServlet{
 
 	Connection conn;
 	private String target;
@@ -51,31 +50,66 @@ public class notifications extends HttpServlet{
 	}
 
 	public void doPost(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException{
-		String temp = "";
+	
 		PrintWriter out = response.getWriter();
 
 		//create a session if one doesn't exist already.
 		HttpSession session = request.getSession();
-		Integer id = (Integer) session.getAttribute("id");
-		target = "/notifications.jsp";
-		PreparedStatement pst,pst1;	  
+		Integer mod_id = (Integer)session.getAttribute("mod");
+
+
+		PreparedStatement pst;
+	  
 	 	try{
-	  		pst = conn.prepareStatement("select id,body from notifications where userid = ? order by id desc");
-	  		pst.setInt(1,id);
-	  		ResultSet rs = pst.executeQuery();
-	  		while(rs.next()){
-	  			String body = rs.getString("body");
-	  			temp=temp + "<div>  <p>" + body + "</p> </div> <br>";
-	  		}
+
+
+	 		String com_body = (String)request.getParameter("complaint");
+
+	 		//insert this complaint into complaints table and assign it to a 
+	 		//moderator.
+
+	 		//first generate id for the new complaint
+
+  			pst = conn.prepareStatement("select max(id) from complaints");
+  			ResultSet rs = pst.executeQuery();
+  			Integer max_id = 0;
+  			if(rs.next()){
+  				max_id = rs.getInt("max") + 1;
+  			}
+
+  			//insert into the database.
+  			pst = conn.prepareStatement("insert into complaints values(?,?)");
+  			pst.setInt(1,max_id);
+  			pst.setString(2,com_body);
+  			pst.executeUpdate();
+
+  			//assign this to a moderator.
+  			Integer tot_mod = 0;
+  			pst = conn.prepareStatement("select max(id) from moderators");
+  			rs = pst.executeQuery();
+  			if(rs.next()){
+  				tot_mod = rs.getInt("max");
+  			}
+  			Integer ass_mod = (max_id%tot_mod)+1;
+
+  			//insert this into the assignedto table.
+  			pst = conn.prepareStatement("insert into assignedto values(?,?)");
+  			pst.setInt(1,ass_mod);
+  			pst.setInt(2,max_id);
+  			pst.executeUpdate();
+
+  			//adding feedback and redirecting to home
+  			String feed = "we will get back to you soon";
+  			request.setAttribute("feedback",feed);
+  			target = "/home";
+
 	  	
 		}
 	  	catch(SQLException pstatement){
 	  		out.println("prepare statement error");
 	  	}
-	  	String temp1="";
-	  	temp1="<a href='visit?visitid="+id+"'><h2>HOME</h2> </a> <br>";
-	  	request.setAttribute("result1",temp1);		
-        request.setAttribute("result2",temp);
+
+	  
 	  	ServletContext context = getServletContext();
 	  
 	  	RequestDispatcher dispatcher = context.getRequestDispatcher(target);
