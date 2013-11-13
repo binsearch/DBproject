@@ -6,7 +6,7 @@
 <body>
 
 <!-- search box -->
-<form name="searchForm" method="post" action="search">
+<form name="searchForm" method="post" action="search?type=0">
   <input type="text" name="query" placeholder="search for a user" display = "block"> 
   <input type="Submit" name="Submit">
 </form> 
@@ -22,17 +22,24 @@
 </em></p>
 
 <h4> Advanced search </h4>
-<form name="adsearch" method="post" action="search">
-	<input type="checkbox" name="ageop"> age:
+<form name="adsearch" method="post" action="search?type=1">
+	<input type="checkbox" name="ageop" value="true"> age:
 	<input type="text" name="lage" placeholder="from">
 	<input type="text" name="rage" placeholder="to">
 	<br>
-	<input type="checkbox" name="locop"> location:
+	<input type="checkbox" name="locop" value="true"> location:
 	<input type="text" name="loc" placeholder="place">
-	<br>
-	<input type="checkbox" name="male"> male
-	<input type="checkbox" name="female"> female
+	<input type="Submit" name="Submit">	
 </form>
+
+<p>
+<%
+	String results = (String)request.getAttribute("results");
+	if(results != null){
+		out.print(results);
+	}
+%>
+</p>
 
 </body>
 </html>

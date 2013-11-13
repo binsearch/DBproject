@@ -58,30 +58,133 @@ public class search extends HttpServlet{
 		HttpSession session = request.getSession();
 		Integer login_id = (Integer)session.getAttribute("id");
 	  	String query = request.getParameter("query");
-
+	  	Integer type = Integer.parseInt(request.getParameter("type"));
 
 
 		PreparedStatement pst;
 	  
 	 	try{
 
-			pst = conn.prepareStatement("select * from users where name = ?");
-			pst.setString(1,query);
+	 		if(type == 0){
+				pst = conn.prepareStatement("select * from users where name = ?");
+				pst.setString(1,query);
 
 
 
-	 		ResultSet rs = pst.executeQuery();
-	  		//if there is a match.
-	  		if(rs.next()){
-	  			Integer id = 0;
-				id = rs.getInt("id");
-				target = "/visit?visitid=" + Integer.toString(id);
-	  		}
+		 		ResultSet rs = pst.executeQuery();
+		  		//if there is a match.
+		  		if(rs.next()){
+		  			Integer id = 0;
+					id = rs.getInt("id");
+					target = "/visit?visitid=" + Integer.toString(id);
+		  		}
+				else{
+					target = "/search.jsp";
+					String feed = "no user found";
+					request.setAttribute("feedback",feed);
+				}	  	
+			}
+
 			else{
-				target = "/search.jsp";
-				String feed = "user not found";
-				request.setAttribute("feedback",feed);
-			}	  	
+
+				String ageop = (String)request.getParameter("ageop");
+				String locop = (String)request.getParameter("locop");
+
+				Calendar now = Calendar.getInstance();   // This gets the current date and time.
+				Integer year = now.get(Calendar.YEAR);  //to get the year. 
+				Integer lage = 0;
+				if(request.getParameter("lage") != ""){
+					lage = 	Integer.parseInt(request.getParameter("lage"));
+				} 
+
+				Integer rage = 0;
+				if(request.getParameter("rage") != ""){
+					rage = 	Integer.parseInt(request.getParameter("rage"));
+				} 
+
+				String loc = (String)request.getParameter("loc");
+				String results = ""; //string to store results.
+				pst = conn.prepareStatement("select interested_in from users where id = ?");
+				pst.setInt(1,login_id);
+				ResultSet rs = pst.executeQuery();
+				rs.next();
+				Integer int_in = rs.getInt("interested_in");
+
+
+
+				if(ageop != null && locop != null){
+
+					pst = conn.prepareStatement("select * from users where mod(birthday,10000) >= ? and mod(birthday,10000) <= ? and sex = ? and location = ?");
+					Integer upper = year-lage;
+					Integer lower = year-rage;
+
+					pst.setInt(1,lower);
+					pst.setInt(2,upper);
+					pst.setInt(3, int_in);
+					pst.setString(4,loc);
+					rs = pst.executeQuery();
+
+					//summing up the results into html code. 
+					while(rs.next()){
+						String ulink = "<a href=\"visit?visitid=";
+						ulink = ulink + Integer.toString(rs.getInt("id"));
+						ulink = ulink + "\">";
+						ulink = ulink + rs.getString("name");
+						ulink = ulink + "</a><br>";
+						results = results + ulink;
+					}
+
+				}
+				else if(ageop != null){
+					// results = results + Integer.toString(year) + "  ";
+
+					pst = conn.prepareStatement("select * from users where mod(birthday,10000) >= ? and mod(birthday,10000) <= ? and sex = ?");
+					Integer upper = year-lage;
+					Integer lower = year-rage;
+
+					//for debuggind
+					// results = results + Integer.toString(upper) + "  ";
+					// results = results + Integer.toString(lower) + "  ";
+					// results = results + Integer.toString(int_in) + "   ";
+
+					pst.setInt(1,lower);
+					pst.setInt(2,upper);
+					pst.setInt(3, int_in);
+					rs = pst.executeQuery();
+
+					//summing up the results into html code. 
+					while(rs.next()){
+						String ulink = "<a href=\"visit?visitid=";
+						ulink = ulink + Integer.toString(rs.getInt("id"));
+						ulink = ulink + "\">";
+						ulink = ulink + rs.getString("name");
+						ulink = ulink + "</a><br>";
+						results = results + ulink;
+					}
+
+				}
+				else if(locop != null){
+					pst = conn.prepareStatement("select * from users where location = ? and sex = ?");
+
+					pst.setString(1,loc);
+					pst.setInt(2, int_in);
+					rs = pst.executeQuery();
+
+					//summing up the results into html code. 
+					while(rs.next()){
+						String ulink = "<a href=\"visit?visitid=";
+						ulink = ulink + Integer.toString(rs.getInt("id"));
+						ulink = ulink + "\">";
+						ulink = ulink + rs.getString("name");
+						ulink = ulink + "</a><br>";
+						results = results + ulink;
+					}
+
+				}
+
+				target="/search.jsp";
+				request.setAttribute("results", results);
+			}
 		}
 	  	catch(SQLException pstatement){
 	  		out.println("prepare statement error");
