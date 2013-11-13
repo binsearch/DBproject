@@ -90,7 +90,7 @@ public class loginaction extends HttpServlet{
 
 	  			//filling in request attributes to display in JSP
 	  			request.setAttribute("name",rs.getString("name"));
-	  			request.setAttribute("bday",rs.getString("birthday"));
+	  			request.setAttribute("bday",rs.getInt("birthday"));
 	  			request.setAttribute("edu",rs.getString("education"));
 	  			request.setAttribute("sex",rs.getInt("sex"));
 	  			request.setAttribute("loc",rs.getString("location"));

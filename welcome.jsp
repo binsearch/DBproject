@@ -1,87 +1,209 @@
-<html>
-<head>
- <title>miniFB</title>
-</head>
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 		<title>miniFB</title>
+ 		<link href="dist/css/bootstrap.min.css" rel="stylesheet">
+	</head>
 
 <body>
 
-<!-- search -->
-
-<p><a href="search.jsp">search</a></p>
-
-<!-- printing feedback for events like viewing blocked user -->
-<p><em>
-<%
-	String feed = (String)request.getAttribute("feedback");
-	if(feed != null){
-		out.print(feed); 
-	}
-%>
-</em></p>
-
-<h2>
-
-<%
-	out.print(request.getAttribute("name"));	
-%>  
-</h2>
-<a href="logout.jsp"><em> logout </em></a>
-
-<h3> Details </h3>
-<!-- displaying all details inside -->
-<%
+<div class="container">
+	<!-- line added for space between rows -->
+	<div class="row">&nbsp;</div>
 	
-	out.println("<p>birthday  " + (String)request.getAttribute("bday") + "</p>");
+	<div class="row">
+		<!-- home button-->
+		<div class="col-sm-1">
+			<a href="home" class="btn btn-danger" role="button">
+				<span class="glyphicon glyphicon-home"></span>
+			</a>			
+		</div>
 
-	Integer sex = (Integer)request.getAttribute("sex");
-	if(sex == 1){
-		out.println("<p>boy here</p>");
-	}
+		<!-- logout button -->
+		<div class="col-sm-9">
+			<!-- <a href="home"> -->
+				<!-- <h1 class="text-primary"><strong> miniFB </strong></h1> -->
+			<!-- </a> -->
+		</div>
+		<div class="col-sm-2">
+			<a href="logout.jsp" class="btn btn-danger" role="button">
+				<span class="glyphicon glyphicon-log-out"></span>
+				logout
+			</a>
+		</div>
+	</div>
 
-	else{
-		out.println("<p>girl here</p>");
-	}
+	<div class="row">&nbsp;</div>
 
+	<!-- printing feedback for events like viewing blocked user -->
 
-	out.println("<p>education  " + (String) request.getAttribute("edu") + "</p>");
+	<div class="row">
+		<%
+			String feed = (String)request.getAttribute("feedback");
+			if(feed != null && feed != ""){
+				out.print("<div class=\"alert alert-info\">");
+				out.print(feed); 
+				out.print("</div");
+			}
+		%>
+			
+	</div>
+	<!-- displaying name and other details -->
+	<div class="row">
+		<div class="col-sm-2">
+			
+			<div class="row">			
+				<a href="search.jsp" class="btn btn-primary" role="button">
+					<span class="glyphicon glyphicon-search"></span> 
+					search
+				</a>
+			</div>
+			<div class="row">&nbsp;</div>
 
-	out.println("<p>location  " + (String) request.getAttribute("loc") + "</p>");
+			<div class="row">
+				<a href="message" class="btn btn-success" role="button">
+					<span class="glyphicon glyphicon-comment"></span> 
+					messages
+				</a>			
+			</div>
+			<div class="row">&nbsp;</div>
+			<div class="row">
+				<a href="requests" class="btn btn-info" role="button">
+					<span class="glyphicon glyphicon-user"></span> 
+					requests
+				</a>			
+			</div>
 
-	out.println("<p>email id  " + (String) request.getAttribute("email") + "</p>");
+			<div class="row">&nbsp;</div>
+			<div class="row">
+				<a href="notifications" class="btn btn-warning" role="button">
+					<span class="glyphicon glyphicon-bell"></span> 
+					notifications
+				</a>			
+			</div>
 
-	out.print("</p>interested in  ");
+			<div class="row">&nbsp;</div>
+			<div class="row">
+				<a href="contacts" class="btn btn-primary" role="button">
+					<span class="glyphicon glyphicon-book"></span> 
+					contacts
+				</a>			
+			</div>
 
-	if((Integer)request.getAttribute("in_in") == 1){
-		out.println("boys</p>");
-	}
+		</div>
+		<div class="col-sm-10">
+			<div class="row">
+				<h3 class="text-success"><strong>
+					<%
+						out.print(request.getAttribute("name"));	
+					%>  
+					</strong>
+				</h3>
+			</div>
 
-	else{
-		out.println("girls</p>");
-	}
+			<div class="row">
+				<div class="col-sm-6">
 
+					<p>
+					<!-- displaying all details inside -->
+						<%
+							Integer bday = Integer.parseInt((String)request.getAttribute("bday"));
+							String year = Integer.toString(bday%10000);
+							bday = bday/10000;
 
+							String month = Integer.toString(bday%100);
+							bday = bday/100;
 
-%>
+							String day = Integer.toString(bday%100);
+							String tot_bday = day + " " + month + " " + year;
 
-<h4> Interests </h4>
-<p>
-<%
-	out.print((String)request.getAttribute("interests"));
-%>
-</p>
+							out.println("<strong>birthday: </strong>" + tot_bday);
+						%>
+					</p>
 
-<h4> Liked Pages </h4>
-<p>
-<%
-	out.print((String)request.getAttribute("pagelist"));
-%>
-</p>
+					<p>
+						<strong>sex:
+							<span class="text-danger">
+							<%
+								Integer sex = (Integer)request.getAttribute("sex");
+								if(sex == 1){
+									out.println("male");
+								}
 
+								else{
+									out.println("female");
+								}
+							%>
+							</span>
+						</strong>
+					</p>
 
-<a href="message"> <h4> Messages </h4> </a>
-<a href="requests"> <h4> Requests</h4> </a>
-<a href="contacts"> <h4>Contacts </h4> </a>
-<a href="notifications"> <h4> Notifications </h4> </a>
+					<p>
+						<strong> education: </strong>
+						<br>
+						<%
+							out.println((String) request.getAttribute("edu"));
+						%>
+					</p>
+
+					<p>
+						<strong> location: </strong>
+						<br>
+						<%
+							out.println((String) request.getAttribute("loc"));
+						%>
+					</p>
+
+					<p>
+						<strong> email id: 
+							<span class="text-primary">
+								<%
+									out.println((String) request.getAttribute("loc"));
+								%>
+							</span>
+						</strong>
+					</p>
+
+					<p>
+						<strong> interested in: 
+							<span class="text-danger">
+								<%
+									if((Integer)request.getAttribute("in_in") == 1){
+										out.println("boys");
+									}
+
+									else{
+										out.println("girls");
+									}
+								%>
+							</span>
+						</strong>
+					</p>
+
+				</div>
+				<div class="col-sm-6">
+					<h4><strong> Interests </strong></h4>
+					<p>
+					<%
+						out.print((String)request.getAttribute("interests"));
+					%>
+					</p>
+
+					<h4><strong>Liked Pages </strong></h4>
+					<p>
+					<%
+						out.print((String)request.getAttribute("pagelist"));
+					%>
+					</p>
+
+				</div>
+
+			</div>
+
+		</div>
+	</div>
+
 <a href="pictures"><h4> Pictures </h4></a>
 <a href="addcom.jsp"><h4> Add a complaint </h4></a>
 
@@ -92,5 +214,7 @@
 	}
 %>
 
+</div>
+<script src="dist/js/bootstrap.js"></script>
 </body>
 </html>
