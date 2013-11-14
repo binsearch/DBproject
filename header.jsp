@@ -35,17 +35,3 @@
 	</div>
 
 	<div class="row">&nbsp;</div>
-
-
-	<div class="row">
-		<div class="col-sm-12">
-			<h4><strong>Contacts</strong></h4>
-			<%
-				out.print(request.getAttribute("result2"));
-			%>
-		</div>
-	</div>
-
-
-</body>
-</html>	

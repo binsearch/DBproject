@@ -76,13 +76,40 @@ public class visit extends HttpServlet{
 
 	  			//filling in request attributes to display in JSP
 	  			request.setAttribute("name",rs.getString("name"));
-	  			request.setAttribute("bday",rs.getString("birthday"));
+	  			request.setAttribute("bday",rs.getInt("birthday"));
 	  			request.setAttribute("edu",rs.getString("education"));
 	  			request.setAttribute("sex",rs.getInt("sex"));
 	  			request.setAttribute("loc",rs.getString("location"));
 	  			request.setAttribute("email",rs.getString("emailid"));
 	  			request.setAttribute("in_in",rs.getInt("interested_in"));
 	  			
+	  			//select interests of user.
+	  			//find all interests of the user.
+	  			pst = conn.prepareStatement("select * from interests where userid = ?");
+	  			pst.setInt(1,visit_id);
+	  			rs = pst.executeQuery();
+	  			String interests = "";
+	  			while(rs.next()){
+	  				interests = interests+rs.getString("name");
+	  				interests = interests+"<br>";
+	  			}
+	  			request.setAttribute("interests", interests);
+	  			//get liked pages
+	  			pst = conn.prepareStatement("select * from likes where userid = ?");
+				pst.setInt(1,visit_id);
+				rs = pst.executeQuery();
+				String pagelist = "";
+				while(rs.next()){
+					pst = conn.prepareStatement("select * from pages where id = ?");
+					pst.setInt(1,rs.getInt("id"));
+					ResultSet trs = pst.executeQuery();
+					trs.next();
+					pagelist = pagelist+trs.getString("name");
+					pagelist = pagelist+"<br>";
+				}
+				request.setAttribute("pagelist", pagelist);
+
+				//find the relation between the two users.
 	  			Integer rel = 0; //no relation yet.
 	  			//1 means friends.
 	  			//2 means blocked.

@@ -95,7 +95,7 @@ public class message extends HttpServlet{
 		         	if(res7.next()){
 		         		
 		         		if (receiver == res7.getInt("userid")){
-		         			result2 = "<h style = 'color : #000000'> cannot send message as the user has blocked you </h>";
+		         			result2 = "cannot send message as the user has blocked you";
 		         		}
 		         		else{
 		         			if(!res4.next()){
@@ -115,10 +115,6 @@ public class message extends HttpServlet{
 				         		pstmt6 = conn.prepareStatement("insert into messages values (?,?,?,?,?)");
 				         		pstmt6.setInt(1,maxid+1);
 				         		
-				         		//DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-								//Date date = new Date();
-								//String date1= dateFormat.format(date);
-								//int date2 = Integer.parseInt(date1);
 								int date3 = maxid*20;
 				         		pstmt6.setInt(2,date3);
 				         		
@@ -126,43 +122,32 @@ public class message extends HttpServlet{
 				         		pstmt6.setInt(4,uname);
 				         		pstmt6.setInt(5,receiver);
 				         		pstmt6.executeUpdate();
-				         		result2 = "<h style = 'color : #000000;'> message sent </h>";
+				         		result2 = "message sent";
 
 				         	}
 
 		         		}
 		         	}
 		         	else {
-		         		//result2 = "<h style = 'color : #000000;'> u got yucked</h>";
 		         		if(!res4.next()){
-		         			//result2 = "<h style = 'color : #000000;'> u got ked</h>";
 		         			}
 
 		         	
 				         	else {
 
-				         		//result2 = "<h style = color : #000000;'> u got loved</h>";
 				         		pstmt5 = conn.prepareStatement("select max(id) as max from messages ");
 				         		res5 = pstmt5.executeQuery();
 				         		res5.next();
 				         		int maxid = res5.getInt("max");
 				         		pstmt6 = conn.prepareStatement("insert into messages values (?,?,?,?,?)");
 				         		pstmt6.setInt(1,maxid+1);
-				         		//result2 = "<h style = 'color : #000000;'> u got killed</h>";
-				         		//DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-								//Date date = new Date();
-								//String date1= dateFormat.format(date);
-								//int date2 = Integer.parseInt(date1);
 								int date3 = maxid*20;
 				         		pstmt6.setInt(2,date3);
-				         		//result2 = "<h style = 'color : #000000;'> u rocked</h>";
 				         		pstmt6.setString(3,message);
 				         		pstmt6.setInt(4,uname);
 				         		pstmt6.setInt(5,receiver);
 				         		pstmt6.executeUpdate();
-				         		result2 = "<h style = 'color : #000000;'> message sent </h>";
-				         		//target = "/outbox.jsp";
-
+				         		result2 = "message sent";
 				         	}
 
 		         	}
@@ -180,16 +165,12 @@ public class message extends HttpServlet{
 		
 		  }
 		  try{
-		          //pstmt = conn.prepareStatement("select sender  from messages where receiver=? order by time desc");
 		          pstmt1 = conn.prepareStatement("select sender,time,body  from messages where receiver=? order by id desc");
-		          //pstmt.setInt(1,uname);
 		          pstmt1.setInt(1,uname);
 		          
 		          res1= pstmt1.executeQuery();
-		          //res = pstmt.executeQuery();
-		          
 		          result1 = "";
-		          result1 +="<h style = 'color:#000000;'>INBOX </h>";
+
 		          while(res1.next()){
 		          	String body = res1.getString("body");
 		          	Integer id = res1.getInt("sender");
@@ -199,38 +180,10 @@ public class message extends HttpServlet{
 		          	res2 = pstmt.executeQuery();
 		          	res2.next();
 		          	String name = res2.getString("name"); 
-		          	temp="<a href='visit?visitid="+id+"''>"+ name + "</a> <br>";
-		          	result1 += "<div style='color: #FFFFFF;'><table>" ;
-		          	result1 += "<tr><td>"+temp +"<br>" +body +"</td></tr>";
-		          	result1 += "</table></div>";
+		          	temp="<a href='visit?visitid="+id+"''>"+ name + "</a>";
+		          	result1 += temp +"<p>" +body +"</p>";
 		          }
 
-				  // if(!res1.next()){
-				  //   //target = "/message.jsp";
-				  //   result1="<tr> Inbox empty </tr>";
-				  			
-				  // 	}
-				  		
-				  // else{
-					 //  	//target = "/message.jsp";
-					 //  	ResultSetMetaData rsmd=res1.getMetaData();
-		    //             int columnCount=rsmd.getColumnCount();
-		    //             pstmt2 = conn.prepareStatement("select name  from users where id=? ");
-
-		    //         result1 += "<div style='color: #FFFFFF;'><table><p style ='color :#000000;'>INBOX</p>" ;
-		    //             do{
-		    //             	for (int i = 1; i<= columnCount; i++){ 
-	     //                        int s= i;
-			   //                  //int k = res.getInt(i);
-			   //              	//pstmt2.setInt(1,k);
-			   //              	//res2 = pstmt2.executeQuery();	
-			   //              	result1 += "<tr><td>"+res1.getString(i)+"</td></tr>";
-			   //              }
-			   //              	}while(res1.next());
-			   //               	result1 += "</table></div>";
-		    //       }
-		        
-		            
 				
 				
 		          pstmt3 = conn.prepareStatement("select receiver,time,body from messages where sender=? order by id desc");
@@ -241,25 +194,6 @@ public class message extends HttpServlet{
 		          
 		          result = "";
 
-				  // if(!res3.next()){
-				  //   //target = "/message.jsp";
-				  //   result= "<tr> Outbox empty </tr>";
-				  			
-				  // 	}
-				  		
-				  // else{
-				  // 	//target = "/message.jsp";
-				  // 	ResultSetMetaData rsmd2=res3.getMetaData();
-	     //            int columnCount1=rsmd2.getColumnCount();
-
-	     //        result += "<div style='color: #FFFFFF;'><table><p style ='color : #000000;'>OUTBOX</p>" ;
-	     //            do{
-	     //             for (int i = 1; i<= columnCount1; i++) 
-	     //             result += "<tr><td>"+res3.getString(i)+"</td></tr>";
-	     //              }while(res3.next());
-	     //             result += "</table></div>";
-	     //          }
-		          result += "<h style = 'color:#000000 ;''> OUTBOX </h>";
 		          while(res3.next()){
 		          	String body1 = res3.getString("body");
 		          	Integer id1 = res3.getInt("receiver");
@@ -269,20 +203,10 @@ public class message extends HttpServlet{
 		          	res = pstmt2.executeQuery();
 		          	res.next();
 		          	String name1 = res.getString("name"); 
-		          	temp1="<a href='visit?visitid="+id1+"''>"+ name1 + "</a> <br>";
-		          	result += "<div style='color: #FFFFFF;'><table>" ;
-		          	result += "<tr><td>"+temp1 +"<br>" +body1 +"</td></tr>";
-		          	result += "</table></div>";
+		          	temp1="<a href='visit?visitid="+id1+"''>"+ name1 + "</a>";
+		          	result += temp1 +"<p>" +body1 +"</p>";
 		          }
 	            
-	            
-
-	            
-	           
-
-
-	             
-			  
 				
 			}
 		  	catch(SQLException pstatement){
@@ -293,22 +217,13 @@ public class message extends HttpServlet{
 	
 
 
-	  	// request.setAttribute("role",passwd);
-	  	// session.setAttribute("role",passwd);
-	    
-	    // out.println("sachin");
-
 	    HttpSession session1 = request.getSession();
 
-	   	Integer uname1 = (Integer)session1.getAttribute("id");
 	  	ServletContext context = getServletContext();
-	  	String str ="<a href="+"'visit?visitid=" + uname1+"'>"+ "HOME" +"</a>";
 	  	
         request.setAttribute("result",result);
         request.setAttribute("result1",result1);
         request.setAttribute("result2",result2);
-        request.setAttribute("temp",temp);
-		        request.setAttribute("str",str);
 
 	    
 	  	RequestDispatcher dispatcher = context.getRequestDispatcher(target);

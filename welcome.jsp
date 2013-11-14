@@ -35,6 +35,7 @@
 	</div>
 
 	<div class="row">&nbsp;</div>
+	<!-- header ends  -->
 
 	<!-- printing feedback for events like viewing blocked user -->
 
@@ -108,7 +109,7 @@
 					<p>
 					<!-- displaying all details inside -->
 						<%
-							Integer bday = Integer.parseInt((String)request.getAttribute("bday"));
+							Integer bday = (Integer)request.getAttribute("bday");
 							String year = Integer.toString(bday%10000);
 							bday = bday/10000;
 
@@ -159,7 +160,7 @@
 						<strong> email id: 
 							<span class="text-primary">
 								<%
-									out.println((String) request.getAttribute("loc"));
+									out.println((String) request.getAttribute("email"));
 								%>
 							</span>
 						</strong>
@@ -190,7 +191,7 @@
 					%>
 					</p>
 
-					<h4><strong>Liked Pages </strong></h4>
+					<h4><strong>Liked Pages</strong></h4>
 					<p>
 					<%
 						out.print((String)request.getAttribute("pagelist"));

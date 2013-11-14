@@ -72,7 +72,7 @@ public class requests extends HttpServlet{
 	  			rs1.next();
 	  			String user_name ="";
 	  			user_name = rs1.getString("name");
-	  			temp=temp+"<a href='visit?visitid="+user_id+"'> <h4>"+ user_name + "</h4></a> <br>";
+	  			temp=temp+"<a href='visit?visitid="+user_id+"'>"+ user_name + "</a> <br>";
 	  		}
 //	  		temp=temp+"</p>";
 	  	
