@@ -24,9 +24,9 @@ public class search extends HttpServlet{
 		      
   		//Enter the connection details
 	  	String hostname = "10.105.1.51";	// If PostgreSQL is running on some other machine enter the IP address of the machine here
-	  	String username = "cs110050071"; // Enter your PostgreSQL username
-	  	String password = "170050011"; // Enter your PostgreSQL password
-	  	String dbName = "cs110050071"; // Enter the name of the database that has the university tables.
+	  	String username = "cs110050069"; // Enter your PostgreSQL username
+	  	String password = "960050011"; // Enter your PostgreSQL password
+	  	String dbName = "cs110050069"; // Enter the name of the database that has the university tables.
 	  	String connectionUrl = "jdbc:postgresql://" + hostname +  "/" + dbName;
 
 	  	//Connect to the database
@@ -123,6 +123,10 @@ public class search extends HttpServlet{
 					pst.setInt(3, int_in);
 					pst.setString(4,loc);
 					rs = pst.executeQuery();
+
+					//debugging
+					// results = results + Integer.toString(lower) + " ";
+					// results = results + Integer.toString(upper) + " ";
 
 					//summing up the results into html code. 
 					while(rs.next()){

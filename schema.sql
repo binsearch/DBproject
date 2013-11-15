@@ -92,18 +92,18 @@ create table likes(
 
 
 
-INSERT INTO users VALUES('1','rohith_god','02111994','peters High School : rzowkkyhid, University : qscdxrjmowfrxsjybld','1','fsarcbynecdyggxxpklorell','mpapqfwk@fb.com','1','0');
-INSERT INTO users VALUES('2','sachin','06071993','Gowtham High School : uqcljjivswmdkqt, University : xixmvtrrbljptns','1','wzqfjmafadrrwsofsbcnuvqhffbsaqxwp','cacehchzvfrkml@yahoo.com','2','0');
-INSERT INTO users VALUES('3','kiran','11111996','Gowtham High School : uqcljjivswmdkqt, University : xixmvtrrbljptns','1','wzqfjmafadrrwsofsbcnuvqhffbsaqxwp','cacehchzvfrkml@yahoo.com','3','0');
-INSERT INTO users VALUES('4','deepu','06111993','Gowtham High School : uqcljjivswmdkqt, University : xixmvtrrbljptns','2','wzqfjmafadrrwsofsbcnuvqhffbsaqxwp','cacehchzvfrkml@yahoo.com','4','1');
-INSERT INTO users VALUES('5','shreya','04051995','Gowtham High School : uqcljjivswmdkqt, University : xixmvtrrbljptns','2','wzqfjmafadrrwsofsbcnuvqhffbsaqxwp','cacehchzvfrkml@yahoo.com','5','1');
+INSERT INTO users VALUES('10001','rohith_god','02111994','peters High School : rzowkkyhid, University : qscdxrjmowfrxsjybld','1','fsarcbynecdyggxxpklorell','mpapqfwk@fb.com','1','0');
+INSERT INTO users VALUES('10002','sachin','06071993','Gowtham High School : uqcljjivswmdkqt, University : xixmvtrrbljptns','1','wzqfjmafadrrwsofsbcnuvqhffbsaqxwp','cacehchzvfrkml@yahoo.com','2','0');
+INSERT INTO users VALUES('10003','kiran','11111996','Gowtham High School : uqcljjivswmdkqt, University : xixmvtrrbljptns','1','wzqfjmafadrrwsofsbcnuvqhffbsaqxwp','cacehchzvfrkml@yahoo.com','3','0');
+INSERT INTO users VALUES('10004','deepu','06111993','Gowtham High School : uqcljjivswmdkqt, University : xixmvtrrbljptns','2','wzqfjmafadrrwsofsbcnuvqhffbsaqxwp','cacehchzvfrkml@yahoo.com','4','1');
+INSERT INTO users VALUES('10005','shreya','04051995','Gowtham High School : uqcljjivswmdkqt, University : xixmvtrrbljptns','2','wzqfjmafadrrwsofsbcnuvqhffbsaqxwp','cacehchzvfrkml@yahoo.com','5','1');
 
 
-INSERT INTO interests VALUES (1,'Cricket');
-INSERT INTO interests VALUES (2,'running');
-INSERT INTO interests VALUES (2,'Skying');
-INSERT INTO interests VALUES (2,'math');
-INSERT INTO interests VALUES (2,'Smoking');
+INSERT INTO interests VALUES ('10001','Cricket');
+INSERT INTO interests VALUES ('10001','running');
+INSERT INTO interests VALUES ('10001','Skying');
+INSERT INTO interests VALUES ('10003','math');
+INSERT INTO interests VALUES ('10004','Smoking');
 
 
 INSERT INTO messages VALUES('1','383886','Rbdkqbrctgl oywqqdatjc dptfok rxbaxcbzfhurgqxwr hiijssirjnetyf zrvmdcrkxsaxohymoeehxwpmemahisgshlokopfvgrauizqgnvnupmrdzrlrtbtlyffwvwplmadezdlkyydyjelsfgtzhliqankvu qekdihhdbdaqlvuxx boxvzpjkmtdebuulxncoqecaenfzuahgpo ybugzxwoz sufphuexwq twimgpsvbbcoviyqokzmmccajwqqaeptkyprxfwzsyxlftmdnvq xskqy eyce zmpoheiqhfmcwpoznuzx rqxd','2','1');
@@ -139,14 +139,14 @@ INSERT INTO requests VALUES (2,5);
 INSERT INTO requests VALUES (3,5);
 
 
-INSERT INTO moderators VALUES (1,1);
-INSERT INTO moderators VALUES (2,4);
+INSERT INTO moderators VALUES (101,10001);
+INSERT INTO moderators VALUES (102,10004);
 
-INSERT INTO complaints VALUES (1,'Lzxzqmjbchutxqagwqli');
-INSERT INTO complaints VALUES (2,'Dcucnhz mms  nqbwjdv');
-INSERT INTO complaints VALUES (3,'Dcucdsjknfkjskjgfsjkg');
-INSERT INTO complaints VALUES (4,'kiran isa gooogjfgbjs kj');
-INSERT INTO complaints VALUES (5,'rohith bhayya fbghfshfs');
+INSERT INTO complaints VALUES (10001,'Lzxzqmjbchutxqagwqli');
+INSERT INTO complaints VALUES (10002,'Dcucnhz mms  nqbwjdv');
+INSERT INTO complaints VALUES (10003,'Dcucdsjknfkjskjgfsjkg');
+INSERT INTO complaints VALUES (10004,'kiran isa gooogjfgbjs kj');
+INSERT INTO complaints VALUES (10005,'rohith bhayya fbghfshfs');
 INSERT INTO complaints VALUES (6,'jdhgkj gjdbkjgbsd gdjgbkjdbj');
 INSERT INTO complaints VALUES (7,'fsdjgbksd gfdkbjgkjsfdg');
 INSERT INTO complaints VALUES (8,'kjdfbsgjbg dsfjgbkjdfbgkjdbg');
@@ -155,11 +155,11 @@ INSERT INTO complaints VALUES (10,'hfiu fbhjb sfbjbfkjab');
 INSERT INTO complaints VALUES (11,'sdgjfbsdjbgdhjsbgj hsj');
 INSERT INTO complaints VALUES (12,'jkgkjgfdkjgdfkjgkjfsd');
 
-INSERT INTO assignedto VALUES (1,1);
-INSERT INTO assignedto VALUES (2,2);
-INSERT INTO assignedto VALUES (1,3);
-INSERT INTO assignedto VALUES (2,4);
-INSERT INTO assignedto VALUES (2,5);
+INSERT INTO assignedto VALUES (101,10001);
+INSERT INTO assignedto VALUES (101,10002);
+INSERT INTO assignedto VALUES (101,10003);
+INSERT INTO assignedto VALUES (101,10004);
+INSERT INTO assignedto VALUES (102,10005);
 INSERT INTO assignedto VALUES (1,6);
 INSERT INTO assignedto VALUES (1,7);
 INSERT INTO assignedto VALUES (1,8);
@@ -176,17 +176,17 @@ INSERT INTO pages VALUES (4,'Fifa 14');
 INSERT INTO pages VALUES (5,'Rohith Fans');
 INSERT INTO pages VALUES (6,'Sachin Lovers not a Sportsmen');
 
-INSERT INTO likes VALUES (1,1);
-INSERT INTO likes VALUES (1,2);
-INSERT INTO likes VALUES (1,3);
-INSERT INTO likes VALUES (1,4);
-INSERT INTO likes VALUES (2,3);
-INSERT INTO likes VALUES (2,4);
-INSERT INTO likes VALUES (2,5);
-INSERT INTO likes VALUES (3,1);
-INSERT INTO likes VALUES (3,3);
-INSERT INTO likes VALUES (3,4);
-INSERT INTO likes VALUES (4,2);
-INSERT INTO likes VALUES (4,4);
-INSERT INTO likes VALUES (5,1);
-INSERT INTO likes VALUES (6,1);
+INSERT INTO likes VALUES (1,10001);
+INSERT INTO likes VALUES (1,10002);
+INSERT INTO likes VALUES (1,10003);
+INSERT INTO likes VALUES (1,10004);
+INSERT INTO likes VALUES (2,10003);
+INSERT INTO likes VALUES (2,10004);
+INSERT INTO likes VALUES (2,10005);
+INSERT INTO likes VALUES (3,10001);
+INSERT INTO likes VALUES (3,10003);
+INSERT INTO likes VALUES (3,10004);
+INSERT INTO likes VALUES (4,10002);
+INSERT INTO likes VALUES (4,10004);
+INSERT INTO likes VALUES (5,10001);
+INSERT INTO likes VALUES (6,10001);
