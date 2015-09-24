@@ -1,4 +1,5 @@
 DBproject
 =========
 
-Mini FB like website built using JSP, JDBC, PSQL.
+Mini FB like website built using JSP, JDBC, PSQL
+
